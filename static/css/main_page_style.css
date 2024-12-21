@@ -40,10 +40,28 @@ main {
     min-height: 40rem;
 }
 
-.create_edit_note {
-    min-width: 80%;
+.form-toggle-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
+.form-toggle-buttons button:hover {
+    background-color: #0056b3;
+}
+
+.create_edit_note {
+    margin-left: 20px;
+    min-width: 75%;
+}
+
+.create_edit_note form {
+    margin-top: 10px;
+}
 
 .note_selection, .create_edit_note {
     background: white;

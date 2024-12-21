@@ -24,4 +24,5 @@ urlpatterns = [
     path("", views.main_page, name="main_page"),
     path("api/notes/", views.get_all_notes, name="get_all_notes"),
     path("update/", views.update_note, name="update_note"),
+    path("create_note/", views.create_note, name="create_note"),
 ]
