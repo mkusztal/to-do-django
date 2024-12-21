@@ -1,0 +1,50 @@
+# Python bytecode and virtual environment
+*.pyc
+*.pyo
+__pycache__/
+venv/
+env/
+
+# Django specific
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.so
+media/
+staticfiles/
+
+# Environment variables
+.env
+
+# Migrations
+*/migrations/
+
+# IDE/Editor specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Node.js (if using npm/yarn for frontend assets)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+
+# Build artifacts
+*.egg-info/
+dist
