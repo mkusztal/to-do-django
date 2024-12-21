@@ -1,23 +1,45 @@
-name: Pylint
+name: Pylint Check
 
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint
-    - name: Analysing the code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+
+      - name: Run Pylint
+        run: |
+          pylint $(git ls-files '*.py') | tee pylint-report.txt
+          
+      - name: Upload Pylint report
+        uses: actions/upload-artifact@v3
+        with:
+          name: pylint-report
+          path: pylint-report.txt
+
+      - name: Fail on Pylint Errors
+        if: failure() # Fail workflow if pylint produces errors
+        run: |
+          if grep -q "error" pylint-report.txt; then
+            echo "Pylint found errors in the code."
+            exit 1
+          fi
