@@ -25,4 +25,5 @@ urlpatterns = [
     path("api/notes/", views.get_all_notes, name="get_all_notes"),
     path("update/", views.update_note, name="update_note"),
     path("create_note/", views.create_note, name="create_note"),
+    path("delete_note/<int:note_id>/", views.delete_note, name="delete_note"),
 ]

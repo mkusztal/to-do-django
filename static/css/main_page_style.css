@@ -40,6 +40,12 @@ main {
     min-height: 40rem;
 }
 
+.list_notes_item {
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+}
+
 .form-toggle-buttons button {
     margin: 5px;
     padding: 10px 20px;
