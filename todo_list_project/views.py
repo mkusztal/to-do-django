@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponseBadRequest
 from .models import Note
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 
 
 def get_all_notes(request):
@@ -47,15 +48,13 @@ def update_note(request):
             note.content = note_content.strip()
             note.save()
 
-            return redirect("main_page.html")
+            return redirect("main_page")
         except Exception as e:
             return render(
                 request,
                 "error.html",
                 {"message": f"An error occurred while updating the note: {str(e)}"},
             )
-
-    return redirect("main_page.html")
 
 
 def create_note(request):
@@ -68,11 +67,20 @@ def create_note(request):
                 return HttpResponseBadRequest("Both title and content are required.")
 
             Note.objects.create(title=title.strip(), content=content.strip())
-            return redirect("main_page.html")
+            return redirect("main_page")
         except Exception as e:
             return render(
                 request,
                 "error.html",
                 {"message": f"An error occurred while creating the note: {str(e)}"},
             )
-    return redirect("create_note.html")
+
+
+def delete_note(request, note_id):
+    try:
+        note = get_object_or_404(Note, id=note_id)
+        note.delete()
+        messages.success(request, "Note deleted successfully.")
+        return redirect("main_page")
+    except Exception as e:
+        messages.error(request, f"Error deleting note: {str(e)}")

@@ -22,11 +22,20 @@
                 <h2>All Notes</h2>
                 <ul>
                     {% for note in notes %}
-                        <li>
-                            <button onclick="editNote({{ note.id }}, '{{ note.title }}', '{{ note.content }}')">
+                        <li class="list_notes_item">
+                            <button
+                                id="editNoteButton"   
+                                onclick="editNote({{ note.id }}, '{{ note.title }}', '{{ note.content }}'), showEditForm()"
+                                >
                                 <i class="fas fa-sticky-note"></i>
                                 <strong>{{ note.title }}</strong>
                             </button>
+                            <form action="{% url 'delete_note' note.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
                         </li>
                     {% empty %}
                         <li>No notes available.</li>
@@ -36,7 +45,7 @@
             
             <div class="create_edit_note">
                 <div class="form-toggle-buttons">
-                    <button id="editNoteButton" onclick="showEditForm()">Edit Note</button>
+                    {% comment %} <button id="editNoteButton" onclick="showEditForm()">Edit Note</button> {% endcomment %}
                     <button id="createNoteButton" onclick="showCreateForm()">Create Note</button>
                 </div>
 
